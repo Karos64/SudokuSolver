@@ -132,7 +132,7 @@ bool SudokuSolver::TrySolving(int idx) {
 
 bool SudokuSolver::Check() {
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
-        if(!CheckColumn(i) || !CheckRow(i)) return false;
+        if(!CheckColumn(i) || !CheckRow(i) || !CheckBox(i)) return false;
     }
     return true;
 }
