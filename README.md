@@ -10,7 +10,7 @@
 + You can print the board to console using `PrintBoard`
 + You can check if sudoku is properly solved via `Check` method.
 + And lastly but not at least you can of course solve any **solvable** sudoku thanks to `Solve` method. It will return **true** or **false** depending if the sudoku can be solved or not.
-+ SudokuSolver also comes with helper-methods: `CheckColumn`, `CheckRow` and `TrySolving`
++ SudokuSolver also comes with helper-methods: `CheckColumn`, `CheckRow`, `CheckBox` and `TrySolving` which are not available publicly but are used in `Solve` method
 
 ## Requirements
 - None, it runs completely on its own!
