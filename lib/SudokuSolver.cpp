@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "../lib/SudokuSolver.h"
 
 using namespace std;
@@ -12,9 +13,6 @@ SudokuSolver::SudokuSolver() {
 }
 
 bool SudokuSolver::SetBoard(int game[][MAX_SUDOKU_SIZE]) {
-    // Counter to counts numbers in rows and columns
-    int counter[MAX_SUDOKU_SIZE][MAX_SUDOKU_SIZE][9] = {0};
-
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
         for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
             int x = game[i][j];
@@ -22,25 +20,40 @@ bool SudokuSolver::SetBoard(int game[][MAX_SUDOKU_SIZE]) {
                 isValid = false;
                 return false;
             }
-            if(x != 0) counter[i][j][x]++;
             board[i][j] = x;
         }
     }
-    
+
+    // check for repeat numbers
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
+        // occurance of numbers 1-9 in row & columns
+        bool occuredRow[9] = {false},
+            occuredCol[9] = {false};
+
         for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
-            for(int k=0; k < 9; k++) {
-                if(counter[i][j][k] > 1) {
+            int x = game[i][j], y = game[j][i];
+            if(x != 0) {
+                if(occuredRow[x-1]) {
                     isValid = false;
                     return false;
                 }
+                occuredRow[x-1] = true;
+            }
+            if(y != 0) {
+                if(occuredCol[y-1]) {
+                    isValid = false;
+                    return false;
+                }
+                occuredCol[y-1] = true;
             }
         }
     }
+    
     return true;
 }
 
 void SudokuSolver::PrintBoard() {
+    //if(!isValid) return;
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
         for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
             int x = board[i][j];

@@ -4,6 +4,10 @@ class SudokuSolver {
     private:
     int board[MAX_SUDOKU_SIZE][MAX_SUDOKU_SIZE];
     bool isValid = true;
+
+    bool CheckColumn(int);
+    bool CheckRow(int);
+
     public:
 
     SudokuSolver();
