@@ -1,2 +1,1 @@
 # SudokuSolver
-## by Seweryn Jarco
