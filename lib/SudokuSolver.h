@@ -7,6 +7,7 @@ class SudokuSolver {
 
     bool CheckColumn(int);
     bool CheckRow(int);
+    bool trySolving(int);
 
     public:
 
@@ -18,4 +19,5 @@ class SudokuSolver {
     };
     bool Solve();
     void PrintBoard();
+    bool Check();
 };

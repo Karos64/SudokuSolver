@@ -17,17 +17,33 @@ int main() {
     };
 
     SudokuSolver solver;
-    if( solver.SetBoard(game) ) {
+    if(solver.SetBoard(game)) {
         cout << "Board set successfuly!" << endl;
     } else {
         cout << "Unfortunately there was a problem with setting up a board!" << endl;
     }
     solver.PrintBoard();
 
-    if( solver.Valid() ) {
+    if(solver.Valid()) {
         cout << "This sudoku board is valid and SudokuSolver can try to solve it!" << endl;
     } else {
         cout << "This sudoku is invalid and SudokuSolver can't solve it!" << endl;
+    }
+
+    cout << "Solving..." << endl;
+
+    if(solver.Solve()) {
+        cout << "Sudoku was solved successfuly!" << endl;
+    } else {
+        cout << "Unfortunately SudokuSolver was not able to solve this sudoku :(" << endl;
+    }
+    solver.PrintBoard();
+
+    cout << "Validating..." << endl;
+    if(solver.Check()) {
+        cout << "Sudoku was checked and it is correctly solved!" << endl;
+    } else {
+        cout << "Oh no! There is a mistake in this solved sudoku!" << endl;
     }
     return 0;
 }
