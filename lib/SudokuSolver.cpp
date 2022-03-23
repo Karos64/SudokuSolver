@@ -57,6 +57,7 @@ void SudokuSolver::PrintBoard() {
 
 bool SudokuSolver::CheckColumn(int index) {
     bool occured[9] = {false};
+    if(index > 8) return false;
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
         int x = board[i][index];
         if(x == 0) continue;
@@ -68,11 +69,27 @@ bool SudokuSolver::CheckColumn(int index) {
 
 bool SudokuSolver::CheckRow(int index) {
     bool occured[9] = {false};
+    if(index > 8) return false;
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
         int x = board[index][i];
         if(x == 0) continue;
         if(occured[x-1]) return false;
         occured[x-1] = true;
+    }
+    return true;
+}
+
+bool SudokuSolver::CheckBox(int index) {
+    bool occured[9] = {false};
+    if(index > 8) return false;
+    int x = ((index%3)*3), y = (index/3)*3;
+    for(int i=0; i<3; i++) {
+        for(int j=0; j<3; j++) {
+            int el = board[x+i][y+j];
+            if(el == 0) continue;
+            if(occured[el-1]) return false;
+            occured[el-1] = true;
+        }
     }
     return true;
 }
@@ -93,7 +110,8 @@ bool SudokuSolver::TrySolving(int idx) {
     if(board[x][y] == 9) return false;
     board[x][y]++;
 
-    if(CheckRow(x) && CheckColumn(y)) {
+    int box = x/3 + (y/3)*3;
+    if(CheckRow(x) && CheckColumn(y) && CheckBox(box)) {
         if(x == 8 && y == 8) return true;
         int newIdx = idx;
         while(board[x][y] != 0) {

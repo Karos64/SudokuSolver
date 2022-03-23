@@ -4,7 +4,7 @@
 using namespace std;
 
 int sudokus[][MAX_SUDOKU_SIZE][MAX_SUDOKU_SIZE] = {
-    {
+    { // this one does not have solutions!
         {0,9,0,8,6,5,2,0,0},
         {0,0,5,0,1,2,0,6,8},
         {0,0,0,0,0,0,0,4,0},
@@ -58,19 +58,21 @@ int main() {
         }
 
         cout << "Solving..." << endl;
-
-        if(solver.Solve()) {
+        bool success = false;
+        if((success = solver.Solve())) {
             cout << "Sudoku was solved successfuly!" << endl;
         } else {
             cout << "Unfortunately SudokuSolver was not able to solve this sudoku :(" << endl;
         }
         solver.PrintBoard();
 
-        cout << "Validating..." << endl;
-        if(solver.Check()) {
-            cout << "Sudoku was checked and it is correctly solved!" << endl;
-        } else {
-            cout << "Oh no! There is a mistake in this solved sudoku!" << endl;
+        if(success) {
+            cout << "Validating..." << endl;
+            if(solver.Check()) {
+                cout << "Sudoku was checked and it is correctly solved!" << endl;
+            } else {
+                cout << "Oh no! There is a mistake in this solved sudoku!" << endl;
+            }
         }
 
         for(int x=0; x<50; x++) cout << "=";
