@@ -7,7 +7,7 @@ class SudokuSolver {
 
     bool CheckColumn(int);
     bool CheckRow(int);
-    bool trySolving(int);
+    bool TrySolving(int);
 
     public:
 

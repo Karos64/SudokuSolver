@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include "../lib/SudokuSolver.h"
 
 using namespace std;
@@ -82,13 +81,14 @@ bool SudokuSolver::Solve() {
     // find first 0 in grid
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
         for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
-            if(board[i][j] == 0) return trySolving((i*9)+j);
+            if(board[i][j] == 0) return TrySolving((i*9)+j);
         }
     }
     return true;
 }
 
-bool SudokuSolver::trySolving(int idx) {
+bool SudokuSolver::TrySolving(int idx) {
+    if(!isValid) return false;
     int x = idx/9, y = idx-(x*9);
     if(board[x][y] == 9) return false;
     board[x][y]++;
@@ -100,15 +100,15 @@ bool SudokuSolver::trySolving(int idx) {
             newIdx++;
             x = newIdx/9, y = newIdx-(x*9);
         }
-        if(!trySolving(newIdx)) {
-            return trySolving(idx);
+        if(!TrySolving(newIdx)) {
+            return TrySolving(idx);
         } else return true;
     } else {
         if(board[x][y] == 9) {
             board[x][y] = 0;
             return false;
         }
-        return trySolving(idx);
+        return TrySolving(idx);
     }
 }
 
