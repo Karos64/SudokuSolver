@@ -19,7 +19,15 @@ int main() {
     SudokuSolver solver;
     if( solver.SetBoard(game) ) {
         cout << "Board set successfuly!" << endl;
+    } else {
+        cout << "Unfortunately there was a problem with setting up a board!" << endl;
     }
     solver.PrintBoard();
+
+    if( solver.Valid() ) {
+        cout << "This sudoku board is valid and SudokuSolver can try to solve it!" << endl;
+    } else {
+        cout << "This sudoku is invalid and SudokuSolver can't solve it!" << endl;
+    }
     return 0;
 }

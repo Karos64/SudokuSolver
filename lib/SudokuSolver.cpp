@@ -12,11 +12,29 @@ SudokuSolver::SudokuSolver() {
 }
 
 bool SudokuSolver::SetBoard(int game[][MAX_SUDOKU_SIZE]) {
+    // Counter to counts numbers in rows and columns
+    int counter[MAX_SUDOKU_SIZE][MAX_SUDOKU_SIZE][9] = {0};
+
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
         for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
             int x = game[i][j];
-            if(x < 0 || x > 9) return false;
+            if(x < 0 || x > 9) {
+                isValid = false;
+                return false;
+            }
+            if(x != 0) counter[i][j][x]++;
             board[i][j] = x;
+        }
+    }
+    
+    for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
+        for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
+            for(int k=0; k < 9; k++) {
+                if(counter[i][j][k] > 1) {
+                    isValid = false;
+                    return false;
+                }
+            }
         }
     }
     return true;
