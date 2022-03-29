@@ -39,44 +39,44 @@ int sudokus[][MAX_SUDOKU_SIZE][MAX_SUDOKU_SIZE] = {
     }
 };
 
-int main() {
+int main(int argc, char * argv[]) {
+    // get sudoku id to run from execution argument
+    int sudokuID = 0;
+    if(argc == 2) sudokuID = atoi(argv[1]);
+    if(sudokuID < 0 || sudokuID > 2) sudokuID = 0;
+
     SudokuSolver solver;
 
-    for(int i=0; i<3; i++) {
-        cout << "[" << (i+1) << "] Sudoku" << endl << endl;
-        if(solver.SetBoard(sudokus[i])) {
-            cout << "Board set successfuly!" << endl;
+    cout << "[" << (sudokuID+1) << "] Sudoku" << endl << endl;
+    if(solver.SetBoard(sudokus[sudokuID])) {
+        cout << "Board set successfuly!" << endl;
+    } else {
+        cout << "Unfortunately there was a problem with setting up a board!" << endl;
+    }
+    solver.PrintBoard();
+
+    if(solver.Valid()) {
+        cout << "This sudoku board is valid and SudokuSolver can try to solve it!" << endl;
+    } else {
+        cout << "This sudoku is invalid and SudokuSolver can't solve it!" << endl;
+    }
+
+    cout << "Solving..." << endl;
+    bool success = false;
+    if((success = solver.Solve())) {
+        cout << "Sudoku was solved successfuly!" << endl;
+    } else {
+        cout << "Unfortunately SudokuSolver was not able to solve this sudoku :(" << endl;
+    }
+    solver.PrintBoard();
+
+    if(success) {
+        cout << "Validating..." << endl;
+        if(solver.Check()) {
+            cout << "Sudoku was checked and it is correctly solved!" << endl;
         } else {
-            cout << "Unfortunately there was a problem with setting up a board!" << endl;
+            cout << "Oh no! There is a mistake in this solved sudoku!" << endl;
         }
-        solver.PrintBoard();
-
-        if(solver.Valid()) {
-            cout << "This sudoku board is valid and SudokuSolver can try to solve it!" << endl;
-        } else {
-            cout << "This sudoku is invalid and SudokuSolver can't solve it!" << endl;
-        }
-
-        cout << "Solving..." << endl;
-        bool success = false;
-        if((success = solver.Solve())) {
-            cout << "Sudoku was solved successfuly!" << endl;
-        } else {
-            cout << "Unfortunately SudokuSolver was not able to solve this sudoku :(" << endl;
-        }
-        solver.PrintBoard();
-
-        if(success) {
-            cout << "Validating..." << endl;
-            if(solver.Check()) {
-                cout << "Sudoku was checked and it is correctly solved!" << endl;
-            } else {
-                cout << "Oh no! There is a mistake in this solved sudoku!" << endl;
-            }
-        }
-
-        for(int x=0; x<50; x++) cout << "=";
-        cout << endl << endl;
     }
     return 0;
 }

@@ -1,5 +1,7 @@
 #define MAX_SUDOKU_SIZE     9
 
+#define SUDOKU_SOLVE_BRUTEFORCE     0
+
 class SudokuSolver {
     private:
     int board[MAX_SUDOKU_SIZE][MAX_SUDOKU_SIZE];
@@ -10,6 +12,8 @@ class SudokuSolver {
     bool CheckBox(int);
     bool TrySolving(int);
 
+    bool SolveBruteforce();
+
     public:
 
     SudokuSolver();
@@ -18,7 +22,8 @@ class SudokuSolver {
     bool Valid() const {
         return isValid; 
     };
-    bool Solve();
+
+    bool Solve(int solveType = 0);
     void PrintBoard();
     bool Check();
 };

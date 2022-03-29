@@ -94,14 +94,13 @@ bool SudokuSolver::CheckBox(int index) {
     return true;
 }
 
-bool SudokuSolver::Solve() {
-    // find first 0 in grid
-    for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
-        for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
-            if(board[i][j] == 0) return TrySolving((i*9)+j);
-        }
+bool SudokuSolver::Solve(int solveType) {
+    switch(solveType) {
+        case SUDOKU_SOLVE_BRUTEFORCE:
+            return SolveBruteforce();
+        default:
+            return SolveBruteforce();
     }
-    return true;
 }
 
 bool SudokuSolver::TrySolving(int idx) {
@@ -133,6 +132,16 @@ bool SudokuSolver::TrySolving(int idx) {
 bool SudokuSolver::Check() {
     for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
         if(!CheckColumn(i) || !CheckRow(i) || !CheckBox(i)) return false;
+    }
+    return true;
+}
+
+bool SudokuSolver::SolveBruteforce() {
+    // find first 0 in grid
+    for(int i=0; i < MAX_SUDOKU_SIZE; i++) {
+        for(int j=0; j < MAX_SUDOKU_SIZE; j++) {
+            if(board[i][j] == 0) return TrySolving((i*9)+j);
+        }
     }
     return true;
 }
